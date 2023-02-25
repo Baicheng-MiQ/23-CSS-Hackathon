@@ -1,8 +1,11 @@
 # 2023 CSS Hackathon Project
-
-Deployed Here: [uclmao.com](https://uclmao.com/)
-
 This repo keeps front-end code for the 2023 CSS Hackathon Project.
+
+## <span style="color:blue"> 🔥 Deployed Here: [uclmao.com](https://uclmao.com/) 
+
+## <span style="color:red"> Never push to the main branch! </span>
+Always create a new branch for your feature and create a pull request to merge your branch to the **develop branch**.
+
 
 ## Tech stack in use
 
@@ -13,7 +16,7 @@ This repo keeps front-end code for the 2023 CSS Hackathon Project.
 
 ## A little bit about [CI/CD](https://en.wikipedia.org/wiki/CI/CD) on this project
 
-I have setted up [GitHub Actions](https://github.com/features/actions) to automate the deployment process. The workflow is as follows:
+I have setted up [GitHub Actions](https://github.com/features/actions) to automate the deployment process.
 
 1. When a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) is created, the workflow will run the test and build process.
 2. If the test and build process passes, the workflow will deploy a preview version of the website to [Firebase Hosting](https://firebase.google.com/docs/hosting) and post a comment to the pull request with the preview link.
@@ -26,10 +29,10 @@ Clone the repo to your local machine using the following command:
 ```
 git clone https://github.com/Baicheng-MiQ/23-CSS-Hackathon.git
 ```
-
+If you fail to clone the repo, please make sure you have [Git](https://git-scm.com/) installed on your machine. Also, make sure you have logged in to your GitHub account. [How to log in to your GitHub account on Git.](https://docs.github.com/en/get-started/quickstart/set-up-git)
 ## How to fire up the project
 
-Make sure you have [Node.js](https://nodejs.org/en/) installed on your machine.
+Make sure you have [Node.js](https://nodejs.org/en/) and npm installed on your machine.
 
 ### Project setup
 
