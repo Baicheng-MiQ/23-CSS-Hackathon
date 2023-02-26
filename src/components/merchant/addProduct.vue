@@ -6,7 +6,7 @@
         </h1>
         <div class="flex flex-row items-start">
           <div class="w-1/2 mr-6">
-            <label for="img" class="text-xl font-bold mb-2">Image</label>
+            <label for="img" class="text-xl font-bold mb-4">Image</label>
             <ImageUpload @imageUploaded="addImageToProductDetail" class="w-full rounded-lg overflow-hidden">
               <template #default>
                 <div class="h-60 bg-gray-100 flex justify-center items-center">
@@ -44,46 +44,55 @@
             </div>
             <label for="SKU" class="text-xl font-bold mb-2">SKU</label>
             <input type="text" name="SKU" id="SKU" v-model="product_details.SKU" class="border-2 border-blue-500 rounded-lg p-2" placeholder="SKU">
-            <label for="expiry_date" class="text-xl font-bold mb-2">Expiry Date</label>
-            <input type="date" name="expiry_date" id="expiry_date" v-model="product_details.expiry_date"
-                    class="text-xl font-bold mb-2">
+            <label for="expiry_date" class="text-xl font-bold mb-2  ">Expiry Date</label>
+            <input type="date" name="expiry_date" id="expiry_date" v-model="product_details.expiry_date" class="border-2 border-blue-500 rounded-lg p-2">
 
-                    <label for="dietary_labels">Dietary Labels</label>
-                    <div>
-                        <p v-for="label in product_details.dietary_labels" :key="label"  >
-                            {{ label }}
-                        </p>
-                    </div>
-                    <input type="text" name="dietary_labels" id="dietary_labels" v-model="new_dietary_label" class="border-2 border-blue-500 rounded-lg p-2">
-                    <button type="button" @click="product_details.dietary_labels.push(new_dietary_label);new_dietary_label='' " >Add</button>
-                    <label for="status"  >Status</label>
-                    <select name="status" id="status" v-model="product_details.status">
-                        <option value="available">Available </option>
-                        <option value="unavailable">Unavailable</option>
-                    </select>
-
-                    <div class="flex flex-row space-x-3">
-                        <a href="#" class="btn btn-error">Cancel</a>
-                        <button class="btn btn-success" @click="submitThisProduct">Submit</button>
-                    </div>
-                    </form>
+            <label for="dietary_labels" class="text-xl font-bold mb-2">Dietary Labels</label>
+            <div>
+                <p v-for="label in product_details.dietary_labels" :key="label"  >
+                    {{ label }}
+                </p>
             </div>
-            <p>
-                this part to be deleted in production:
-                {{ product_details }}
-            </p>
+            <input type="text" name="dietary_labels" id="dietary_labels" v-model="new_dietary_label" class="border-2 border-blue-500 rounded-lg p-2">
+            <button type="button" @click="product_details.dietary_labels.push(new_dietary_label);new_dietary_label='' " >Add</button>
+            <label for="status" class="text-xl font-bold mb-2">Status:</label>
+                <select  name="status" id="status" v-model="product_details.status" class="border-2 border-blue-500 rounded-lg p-2">
+                    <option value="available">Available</option>
+                    <option value="unavailable">Unavailable</option>
+                </select>
+
+            <div class="flex justify-center mt-8" >
+                <a href="#" class="btn btn-error mr-4">Cancel</a>
+                <button class="btn btn-success" @click="submitThisProduct">Submit</button>
+            </div>
+            </form>
+            </div>
+            
         </div>
     </div>
 </template>
 <script>
 import ImageUpload from '../imageUpload.vue';
+import axios from 'axios';
 
+const DEFAULT_DETAILS = {
+                // belongs_to: this.$store.state.demo_merchant_id,
+                name: "",
+                price_original: 0,
+                price_discount: 0,
+                qty: 1,
+                img: "",
+                SKU: "",
+                expiry_date: "",
+                dietary_labels: [],
+                status: "available",
+            };
 export default {
     name: "addProductModal",
     data() {
         return {
             product_details: {
-                belongs_to: this.$store.state.demo_merchant_id,
+                // belongs_to: this.$store.state.demo_merchant_id,
                 name: "",
                 price_original: 0,
                 price_discount: 0,
@@ -102,7 +111,15 @@ export default {
             this.product_details.img = imageUrl;
         },
         submitThisProduct() {
-            console.log(this.product_details);
+            this.product_details['merchant_id'] = this.$store.state.demo_merchant_id;
+            axios.post('https://css-hackathon-23-b6erdbabxa-nw.a.run.app/products', this.product_details)
+                .then((response) => {
+                    console.log(response);
+                    // this.product_details = DEFAULT_DETAILS;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
     components: { ImageUpload }

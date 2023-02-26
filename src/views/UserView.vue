@@ -10,7 +10,7 @@
                     <button class="btn btn-error" @click="getCurrentLocation">{{ locationStatus }}</button>
                 </div>
                 <h1 class="text-7xl font-bold bg-orange-100 rounded-3xl p-8 leading-normal">Reducing Waste, Sharing Taste</h1>
-                <button class="btn btn-primary w-fit">Find Store</button>
+                <button class="btn btn-primary w-fit" @click="getNerebyStores">Find Store</button>
             </div>
             <div></div>
             <div></div>
@@ -18,32 +18,14 @@
         </div>
 
         <div class="carousel rounded-box m-10 space-x-5">
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
-            <div class="carousel-item">
-                <merchantPreview :merchant="demoMerchant" :currentLocation="{longitude: userLongitude, latitude: userLatitude}"/>
-            </div> 
+            <div class="carousel-item" v-for="item in findResult" :key="item.name">
+                <merchant-preview :merchant="item" 
+                :currentLocation="{latitude: userLatitude, longitude: userLongitude}"
+                >
+                </merchant-preview>
+            </div>
         </div>
-
+    
             
 
     </div>
@@ -51,6 +33,22 @@
 </template>
 <script>
 import merchantPreview from '../components/user/merchantPreview.vue'
+function helperGetDistance(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d || 0;
+}
+function deg2rad(deg) {
+    return deg * (Math.PI / 180)
+}
 export default {
     name: 'userView',
     components: {
@@ -62,12 +60,7 @@ export default {
             userLatitude: 0,
             userLongitude: 0,
             locationStatus: 'Get Location',
-            demoMerchant: {
-                name: 'Demo Merchant',
-                logo: 'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg',
-                latitude: 51.52,
-                longitude: -0.13,
-            }
+            findResult: []
         }
     },
     methods: {
@@ -85,6 +78,20 @@ export default {
                         this.locationStatus = 'Get Location'
                     })
             });
+        },
+        getNerebyStores(){
+            fetch(`https://css-hackathon-23-b6erdbabxa-nw.a.run.app/merchants`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                // sort by distance to user
+                // descending order
+                data.sort((a, b) => {
+                    return helperGetDistance(a.latitude, a.longitude, this.userLatitude, this.userLongitude) - helperGetDistance(b.latitude, b.longitude, this.userLatitude, this.userLongitude)
+                })
+                this.findResult = data
+                
+            })
         }
     },
     mounted() {
@@ -93,6 +100,7 @@ export default {
 
 }
 </script>
-<style>
-    
+<style >
+
+
 </style>

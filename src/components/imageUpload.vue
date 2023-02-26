@@ -2,7 +2,7 @@
     <div>
       <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input file-input-bordered w-full max-w-xs"/>
       <!-- display image uploaded -->
-        <img :src="image" alt="image" v-show="image">
+        <img :src="image" alt="image" v-show="image" class="m-2">
     </div>
   </template>
   
@@ -38,7 +38,7 @@ export default {
     emits: ['imageUploaded'],
     data() {
         return {
-            image: '',
+            image: 'https://dummyimage.com/512x512',
         }
     }
 }

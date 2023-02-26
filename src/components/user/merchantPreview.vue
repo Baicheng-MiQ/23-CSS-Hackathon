@@ -9,10 +9,10 @@
                     <a class="btn btn-primary" href="#merchant-detail-modal">→</a>
                     <div class="modal" id="merchant-detail-modal">
                         <div class="modal-box w-11/12 max-w-5xl">
+                            <a href="#" class="btn btn-circle">x</a>
                             <merchantDetail :merchant="merchant" v-if="modalShowing==='merchantDetail'"
                                 @viewProduct="viewProductDetail"/>
                             <merchantProducts :product="currentProduct" @returnToMerchantDetail="returnToMerchantDetail" v-else/>
-                            <a href="#" class="btn">Finish</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ export default {
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
             const d = R * c; // in metres
-            return d*0.001
+            return d*0.001 || 0;
         }
     }
 }
