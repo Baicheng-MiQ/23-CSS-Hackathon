@@ -1,5 +1,9 @@
 <template>
-    <div> Home component dev </div>
+    <div> 
+        <p>
+            YumYumNow
+        </p> 
+    </div>
 </template>
 
 <script>
