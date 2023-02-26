@@ -1,9 +1,14 @@
 // create defult vuex store
 import { createStore } from 'vuex'
-import user from '../store/modules/user'
+
 
 export default createStore({
-    state: {},
+    state () {
+        return {
+            demo_merchant_id: 'DEMO',
+            demo_user_id: 'DEMO',
+        }
+    },
     mutations: {},
     actions: {},
     modules: {}
