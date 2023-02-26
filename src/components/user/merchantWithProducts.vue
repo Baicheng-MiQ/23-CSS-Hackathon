@@ -16,7 +16,7 @@
             <div class="w-1/3" v-for="product in merchantProducts" :key="product.Product_ID">
               <div class="flex flex-col m-1 border-2 p-3 rounded-lg h-full hover:shadow-md">
                 <img :src="product.img" alt="" class="w-full h-40 object-cover object-center rounded-lg">
-                <h1 class="text-xl font-semibold text-gray-700 my-2">Product Name {{ product.Name }}</h1>
+                <h1 class="text-xl font-semibold text-gray-700 my-2"> {{ product.name }}</h1>
                 <p class="text-lg font-bold text-gray-900 mb-2">Price : {{ product.price_discounted }}</p>
                 <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg"
                   @click="showProductDetail(product)">
