@@ -14,7 +14,7 @@
           </div>
           <div class="flex flex-row space-x-2">
             <h2 class="text-lg font-semibold">Dietary Required:</h2>
-            <p class="labels">{{ product.dietary_Labels }}</p>
+            <p class="labels">{{ product.dietary_labels }}</p>
           </div>
           <div class="flex flex-row space-x-2">
             <h2 class="text-lg font-semibold">Quantity Left:</h2>

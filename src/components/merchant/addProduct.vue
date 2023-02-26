@@ -29,7 +29,7 @@
                 </div>
               </div>
               <div class="relative w-1/2 ml-2">
-                <input type="number" name="price_discount" id="price_discount" v-model="product_details.price_discount" class="border-2 border-blue-500 rounded-lg p-2 w-full" placeholder="Discounted Price">
+                <input type="number" name="price_discount" id="price_discount" v-model="product_details.price_discounted" class="border-2 border-blue-500 rounded-lg p-2 w-full" placeholder="Discounted Price">
                 <div class="absolute top-0 bottom-0 right-0 h-full flex items-center pr-2 text-gray-400">
                   <i class="fas fa-tags"></i>
                 </div>
@@ -79,7 +79,7 @@ const DEFAULT_DETAILS = {
                 // belongs_to: this.$store.state.demo_merchant_id,
                 name: "",
                 price_original: 0,
-                price_discount: 0,
+                price_discounted: 0,
                 qty: 1,
                 img: "",
                 SKU: "",
